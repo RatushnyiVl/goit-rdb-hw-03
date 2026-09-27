@@ -1,0 +1,38 @@
+INSERT INTO hw3_data_clean (
+    age,
+    job,
+    marital,
+    education,
+    is_default,
+    balance,
+    housing,
+    loan,
+    contact,
+    day,
+    month,
+    duration,
+    campaign,
+    pdays,
+    previous,
+    poutcome,
+    y
+)
+SELECT
+    age::SMALLINT,
+    NULLIF(job, 'unknown'),
+    NULLIF(marital, 'unknown'),
+    NULLIF(education, 'unknown'),
+    CASE is_default WHEN 'yes' THEN TRUE WHEN 'no' THEN FALSE END,
+    balance::NUMERIC,
+    CASE housing   WHEN 'yes' THEN TRUE WHEN 'no' THEN FALSE END,
+    CASE loan      WHEN 'yes' THEN TRUE WHEN 'no' THEN FALSE END,
+    NULLIF(contact, 'unknown'),
+    day::SMALLINT,
+    month,
+    duration::SMALLINT,
+    campaign::SMALLINT,
+    NULLIF(pdays, '-1')::SMALLINT,
+    previous::SMALLINT,
+    NULLIF(poutcome, 'unknown'),
+    y::BOOLEAN
+FROM hw3_data_staging;
